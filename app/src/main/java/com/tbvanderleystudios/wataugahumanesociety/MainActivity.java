@@ -64,9 +64,21 @@ public class MainActivity extends Activity {
                 // Connect to the Humane Society Website
                 Document document = Jsoup.connect(mURLAddress).get();
 
-                // This is done to get the number of animals so that arrays can be sized properly
+                // Create all of the element selectors.
                 Elements nameSelector = document.select(".animal-listing__title > a");
+                Elements bitmapImageSelector = document.select(".animal-listing__image > img");
+                Elements statusSelector = document.select("");
+
+                // This is done to get the number of animals so that arrays can be sized properly
                 mAnimalCount = nameSelector.size();
+                mNamesArray = new String[mAnimalCount];
+                mBitmapImageArray = new Bitmap[mAnimalCount];
+                mStatusArray = new String[mAnimalCount];
+                mGenderArray = new String[mAnimalCount];
+                mAgeArray = new String[mAnimalCount];
+                mBreedArray = new String[mAnimalCount];
+                mAnimals = new Animal[mAnimalCount];
+
 
 
             } catch (IOException e) {
