@@ -67,7 +67,10 @@ public class MainActivity extends Activity {
                 // Create all of the element selectors.
                 Elements nameSelector = document.select(".animal-listing__title > a");
                 Elements bitmapImageSelector = document.select(".animal-listing__image > img");
-                Elements statusSelector = document.select("");
+                Elements statusSelector = document.select(".animal-listing__text > h5:nth-child(2)");
+                Elements genderSelector = document.select(".animal-listing__text > h5:nth-child(3)");
+                Elements ageSelector = document.select(".animal-listing__text > h5:nth-child(4)");
+                Elements breedSelector = document.select(".animal-listing__text > h5:nth-child(5)");
 
                 // This is done to get the number of animals so that arrays can be sized properly
                 mAnimalCount = nameSelector.size();
