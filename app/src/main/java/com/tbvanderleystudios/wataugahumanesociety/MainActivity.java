@@ -5,15 +5,19 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import layout.AnimalRecyclerFragment;
@@ -40,6 +44,7 @@ public class MainActivity extends Activity {
 
         private String mURLAddress = "http://wataugahumane.org/animals";
         private int mAnimalCount;
+        private Bitmap bitmap;
         private ProgressDialog mProgressDialog = new ProgressDialog(MainActivity.this);
         private String[] mNamesArray;
         private Bitmap[] mBitmapImageArray;
@@ -82,7 +87,23 @@ public class MainActivity extends Activity {
                 mBreedArray = new String[mAnimalCount];
                 mAnimals = new Animal[mAnimalCount];
 
+                // All arrays are having data parsed in
+                ParseData(nameSelector, mNamesArray);
+                ParseBitmapImages(bitmapImageSelector);
+                ParseData(statusSelector, mStatusArray);
+                ParseData(genderSelector, mGenderArray);
+                ParseData(ageSelector, mAgeArray);
+                ParseData(breedSelector, mBreedArray);
 
+                // Pass all elements into the Animal[] called mAnimals.
+                for (int i = 0; i < mAnimalCount; i++) {
+                    mAnimals[i] = new Animal(mNamesArray[i],
+                            mBitmapImageArray[i],
+                            mStatusArray[i],
+                            mGenderArray[i],
+                            mAgeArray[i],
+                            mBreedArray[i]);
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -91,12 +112,32 @@ public class MainActivity extends Activity {
             return null;
         }
 
+
+        private void ParseBitmapImages(Elements bitmapImageSelector) throws IOException {
+            int iterator = 0;
+            for(Element element : bitmapImageSelector) {
+                String imgSrc = element.attr("src");
+                InputStream input = new java.net.URL(imgSrc).openStream();
+                bitmap = BitmapFactory.decodeStream(input);
+                mBitmapImageArray[iterator] = bitmap;
+                iterator++;
+            }
+        }
+
+        private void ParseData(Elements selector, String[] array) {
+            int iterator = 0;
+            for(Element element : selector) {
+                array[iterator] = element.text();
+                iterator++;
+            }
+        }
+
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
             mProgressDialog.dismiss();
-            Toast.makeText(MainActivity.this, Integer.toString(mAnimalCount), Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, mAnimals[0].getName(), Toast.LENGTH_LONG).show();
         }
     }
 }
