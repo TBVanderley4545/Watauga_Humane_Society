@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -24,18 +25,13 @@ import layout.AnimalRecyclerFragment;
 
 public class MainActivity extends Activity {
 
+    public static final String ANIMALS = "animals";
     private Animal[] mAnimals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, new AnimalRecyclerFragment());
-        ft.addToBackStack(null);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();
 
         new GetAnimalsTask().execute();
     }
@@ -138,6 +134,16 @@ public class MainActivity extends Activity {
 
             mProgressDialog.dismiss();
             Toast.makeText(MainActivity.this, mAnimals[0].getStatus(), Toast.LENGTH_LONG).show();
+
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArray(ANIMALS, mAnimals);
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment animalRecyclerFragment = new AnimalRecyclerFragment().newInstance(mAnimals);
+            ft.replace(R.id.content_frame, animalRecyclerFragment, "animal_fragment");
+            ft.addToBackStack(null);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commit();
         }
     }
 }

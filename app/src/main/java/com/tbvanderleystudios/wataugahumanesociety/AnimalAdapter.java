@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class CaptionedImageAdapter extends RecyclerView.Adapter<CaptionedImageAdapter.ViewHolder>{
+public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder>{
 
     private Animal[] mAnimals;
     private Listener mListener;
@@ -25,7 +25,7 @@ public class CaptionedImageAdapter extends RecyclerView.Adapter<CaptionedImageAd
         }
     }
 
-    public CaptionedImageAdapter(Animal[] animals) {
+    public AnimalAdapter(Animal[] animals) {
         mAnimals = animals;
     }
 
@@ -35,7 +35,7 @@ public class CaptionedImageAdapter extends RecyclerView.Adapter<CaptionedImageAd
 
 
     @Override
-    public CaptionedImageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AnimalAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView cardView = (CardView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.animal_list_card, parent, false);
 
@@ -43,7 +43,7 @@ public class CaptionedImageAdapter extends RecyclerView.Adapter<CaptionedImageAd
     }
 
     @Override
-    public void onBindViewHolder(CaptionedImageAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(AnimalAdapter.ViewHolder holder, final int position) {
         CardView cardView = holder.cardView;
 
         ImageView animalImageView = (ImageView) cardView.findViewById(R.id.animalImageView);

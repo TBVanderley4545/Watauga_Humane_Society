@@ -5,15 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="140dp"
+    android:layout_height="180dp"
     android:layout_margin="5dp"
     card_view:cardCornerRadius="4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-
-        tools:background="@android:color/holo_green_light">
+        android:background="#8A9B0F">
 
         <ImageView
             android:id="@+id/animalImageView"
