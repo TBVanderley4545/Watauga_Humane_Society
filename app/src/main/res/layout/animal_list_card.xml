@@ -16,7 +16,7 @@
         tools:background="@android:color/holo_green_light">
 
         <ImageView
-            android:id="@+id/animalDetailPic"
+            android:id="@+id/animalImageView"
             android:layout_width="75dp"
             android:layout_height="105dp"
             android:layout_marginRight="8dp"
@@ -27,7 +27,7 @@
             android:id="@+id/animalNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/animalDetailPic"
+            android:layout_toRightOf="@id/animalImageView"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:textColor="@android:color/white"
@@ -38,7 +38,7 @@
             android:id="@+id/animalBreedTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/animalDetailPic"
+            android:layout_toRightOf="@id/animalImageView"
             android:layout_below="@id/animalNameTextView"
             android:layout_marginBottom="3dp"
             android:textColor="@android:color/white"
@@ -49,7 +49,7 @@
             android:id="@+id/animalStatusTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/animalDetailPic"
+            android:layout_toRightOf="@id/animalImageView"
             android:layout_below="@id/animalBreedTextView"
             android:textColor="@android:color/white"
             tools:text="Status: Stray Hold"/>
@@ -58,7 +58,7 @@
             android:id="@+id/animalGenderTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/animalDetailPic"
+            android:layout_toRightOf="@id/animalImageView"
             android:layout_below="@id/animalStatusTextView"
             android:textColor="@android:color/white"
             tools:text="Sex: Male / "/>
@@ -67,7 +67,7 @@
             android:id="@+id/animalAgeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/animalDetailPic"
+            android:layout_toRightOf="@id/animalImageView"
             android:layout_below="@id/animalGenderTextView"
             android:textColor="@android:color/white"
             tools:text="Age: 0 month(s)"/>
