@@ -133,7 +133,6 @@ public class MainActivity extends Activity {
             super.onPostExecute(aVoid);
 
             mProgressDialog.dismiss();
-            Toast.makeText(MainActivity.this, mAnimals[0].getStatus(), Toast.LENGTH_LONG).show();
 
             Bundle bundle = new Bundle();
             bundle.putParcelableArray(ANIMALS, mAnimals);
