@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
             super.onPostExecute(aVoid);
 
             mProgressDialog.dismiss();
-            Toast.makeText(MainActivity.this, mAnimals[0].getName(), Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, mAnimals[0].getStatus(), Toast.LENGTH_LONG).show();
         }
     }
 }

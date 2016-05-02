@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:layout_margin="5dp"
+    card_view:cardCornerRadius="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+
+        tools:background="@android:color/holo_green_light">
+
+        <ImageView
+            android:id="@+id/animalDetailPic"
+            android:layout_width="75dp"
+            android:layout_height="105dp"
+            android:layout_marginRight="8dp"
+            android:layout_centerVertical="true"
+            tools:src="@drawable/wilbur"/>
+
+        <TextView
+            android:id="@+id/animalNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/animalDetailPic"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            tools:text="WILBUR"/>
+
+        <TextView
+            android:id="@+id/animalBreedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/animalDetailPic"
+            android:layout_below="@id/animalNameTextView"
+            android:layout_marginBottom="3dp"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            tools:text="Domestic Medium Hair / Mix"/>
+
+        <TextView
+            android:id="@+id/animalStatusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/animalDetailPic"
+            android:layout_below="@id/animalBreedTextView"
+            android:textColor="@android:color/white"
+            tools:text="Status: Stray Hold"/>
+
+        <TextView
+            android:id="@+id/animalGenderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/animalDetailPic"
+            android:layout_below="@id/animalStatusTextView"
+            android:textColor="@android:color/white"
+            tools:text="Sex: Male / "/>
+
+        <TextView
+            android:id="@+id/animalAgeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/animalDetailPic"
+            android:layout_below="@id/animalGenderTextView"
+            android:textColor="@android:color/white"
+            tools:text="Age: 0 month(s)"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
