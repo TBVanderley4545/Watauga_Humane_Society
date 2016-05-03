@@ -5,12 +5,31 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#490A3D"
     tools:context="com.tbvanderleystudios.wataugahumanesociety.MainActivity">
+
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo"
+        android:contentDescription="@string/whs_logo_description"/>
+
+    <TextView
+        android:id="@+id/whsNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@id/logoImageView"
+        android:textSize="40sp"
+        android:textColor="@android:color/white"
+        android:text="@string/whs_name_text_view"/>
 
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/logoImageView"/>
 
 </RelativeLayout>
 

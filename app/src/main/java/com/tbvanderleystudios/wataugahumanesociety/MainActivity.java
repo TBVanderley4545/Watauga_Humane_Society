@@ -6,10 +6,12 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.jsoup.Jsoup;
@@ -34,6 +36,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         new GetAnimalsTask().execute();
+
+        TextView whsNameTextView = (TextView) findViewById(R.id.whsNameTextView);
+        Typeface fishFingersFont = Typeface.createFromAsset(getAssets(), "Fishfingers.ttf");
+        whsNameTextView.setTypeface(fishFingersFont);
     }
 
     private class GetAnimalsTask extends AsyncTask<Void, Void, Void> {
@@ -132,8 +138,6 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            mProgressDialog.dismiss();
-
             Bundle bundle = new Bundle();
             bundle.putParcelableArray(ANIMALS, mAnimals);
 
@@ -143,6 +147,8 @@ public class MainActivity extends Activity {
             ft.addToBackStack(null);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();
+
+            mProgressDialog.dismiss();
         }
     }
 }
