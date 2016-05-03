@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -58,6 +60,9 @@ public class MainActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            lockScreenOrientation();
+
             mProgressDialog.setTitle("Looking For Animals Now!");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
@@ -114,6 +119,24 @@ public class MainActivity extends Activity {
             return null;
         }
 
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArray(ANIMALS, mAnimals);
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment animalRecyclerFragment = AnimalRecyclerFragment.newInstance(mAnimals);
+            ft.replace(R.id.content_frame, animalRecyclerFragment, "animal_fragment");
+            ft.addToBackStack(null);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commit();
+
+            mProgressDialog.dismiss();
+
+            unlockScreenOrientation();
+        }
 
         private void ParseBitmapImages(Elements bitmapImageSelector) throws IOException {
             int iterator = 0;
@@ -134,21 +157,17 @@ public class MainActivity extends Activity {
             }
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        private void lockScreenOrientation() {
+            int currentOrientation = getResources().getConfiguration().orientation;
+            if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            } else {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            }
+        }
 
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArray(ANIMALS, mAnimals);
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            Fragment animalRecyclerFragment = AnimalRecyclerFragment.newInstance(mAnimals);
-            ft.replace(R.id.content_frame, animalRecyclerFragment, "animal_fragment");
-            ft.addToBackStack(null);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.commit();
-
-            mProgressDialog.dismiss();
+        private void unlockScreenOrientation() {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         }
     }
 }
