@@ -10,18 +10,20 @@
 
     <ImageView
         android:id="@+id/logoImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:src="@drawable/logo"
         android:contentDescription="@string/whs_logo_description"/>
 
     <TextView
         android:id="@+id/whsNameTextView"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="75dp"
         android:gravity="center_vertical"
         android:layout_toRightOf="@id/logoImageView"
-        android:textSize="40sp"
+        android:textSize="35sp"
         android:textColor="@android:color/white"
         android:text="@string/whs_name_text_view"/>
 

@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
             bundle.putParcelableArray(ANIMALS, mAnimals);
 
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            Fragment animalRecyclerFragment = new AnimalRecyclerFragment().newInstance(mAnimals);
+            Fragment animalRecyclerFragment = AnimalRecyclerFragment.newInstance(mAnimals);
             ft.replace(R.id.content_frame, animalRecyclerFragment, "animal_fragment");
             ft.addToBackStack(null);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
