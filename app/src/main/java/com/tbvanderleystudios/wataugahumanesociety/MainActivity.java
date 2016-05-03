@@ -2,6 +2,7 @@ package com.tbvanderleystudios.wataugahumanesociety;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
@@ -37,12 +38,15 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new GetAnimalsTask().execute();
+        if(getFragmentManager().findFragmentById(R.id.content_frame) == null) {
+            new GetAnimalsTask().execute();
+        }
 
         TextView whsNameTextView = (TextView) findViewById(R.id.whsNameTextView);
         Typeface fishFingersFont = Typeface.createFromAsset(getAssets(), "Fishfingers.ttf");
         whsNameTextView.setTypeface(fishFingersFont);
     }
+
 
     private class GetAnimalsTask extends AsyncTask<Void, Void, Void> {
 

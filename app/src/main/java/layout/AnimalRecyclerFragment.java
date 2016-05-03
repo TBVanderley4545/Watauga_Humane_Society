@@ -47,9 +47,9 @@ public class AnimalRecyclerFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         animalRecycler.setLayoutManager(layoutManager);
 
+        setRetainInstance(true);
+
         // Inflate the layout for this fragment
         return animalRecycler;
-
-
     }
 }
