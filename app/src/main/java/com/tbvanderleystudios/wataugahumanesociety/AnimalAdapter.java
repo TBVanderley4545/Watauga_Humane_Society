@@ -52,8 +52,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         animalImageView.setContentDescription(mAnimals[position].getName());
 
         TextView animalNameTextView = (TextView) cardView.findViewById(R.id.animalNameTextView);
-        animalNameTextView.setText(mAnimals[position].getName().toUpperCase())
-        Typeface fishFingersFont = Typeface.createFromAsset();
+        animalNameTextView.setText(mAnimals[position].getName().toUpperCase());
 
         TextView animalBreedTextView = (TextView) cardView.findViewById(R.id.animalBreedTextView);
         animalBreedTextView.setText(mAnimals[position].getBreed());
