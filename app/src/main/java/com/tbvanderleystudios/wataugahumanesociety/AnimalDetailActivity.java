@@ -22,7 +22,7 @@ public class AnimalDetailActivity extends AppCompatActivity {
         animalDetailPic.setContentDescription(animal.getName());
 
         TextView animalDetailName = (TextView) findViewById(R.id.animalDetailName);
-        animalDetailName.setText(animal.getName());
+        animalDetailName.setText(animal.getName().toUpperCase());
 
         TextView animalDetailStatus = (TextView) findViewById(R.id.animalDetailStatus);
         animalDetailStatus.setText(animal.getStatus());

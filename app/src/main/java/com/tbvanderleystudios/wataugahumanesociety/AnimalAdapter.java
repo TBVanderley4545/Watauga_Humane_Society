@@ -1,5 +1,6 @@
 package com.tbvanderleystudios.wataugahumanesociety;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,7 +52,8 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         animalImageView.setContentDescription(mAnimals[position].getName());
 
         TextView animalNameTextView = (TextView) cardView.findViewById(R.id.animalNameTextView);
-        animalNameTextView.setText(mAnimals[position].getName());
+        animalNameTextView.setText(mAnimals[position].getName().toUpperCase())
+        Typeface fishFingersFont = Typeface.createFromAsset();
 
         TextView animalBreedTextView = (TextView) cardView.findViewById(R.id.animalBreedTextView);
         animalBreedTextView.setText(mAnimals[position].getBreed());
