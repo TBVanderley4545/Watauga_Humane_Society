@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.tbvanderleystudios.wataugahumanesociety.Animal;
 import com.tbvanderleystudios.wataugahumanesociety.AnimalAdapter;
+import com.tbvanderleystudios.wataugahumanesociety.AnimalDetailActivity;
 import com.tbvanderleystudios.wataugahumanesociety.MainActivity;
 import com.tbvanderleystudios.wataugahumanesociety.R;
 
@@ -46,6 +47,16 @@ public class AnimalRecyclerFragment extends Fragment {
         animalRecycler.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         animalRecycler.setLayoutManager(layoutManager);
+
+        adapter.setListener(new AnimalAdapter.Listener(){
+            @Override
+            public void onClick(int position) {
+                Intent intent = new Intent(getActivity(), AnimalDetailActivity.class);
+                intent.putExtra(AnimalDetailActivity.EXTRA_ANIMAL_POSITION_NO, mAnimals[position]);
+                getActivity().startActivity(intent);
+            }
+        });
+
 
         setRetainInstance(true);
 
