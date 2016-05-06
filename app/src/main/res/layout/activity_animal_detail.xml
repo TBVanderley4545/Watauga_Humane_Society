@@ -12,7 +12,6 @@
     
     <ImageView
         android:id="@+id/animalDetailPic"
-        android:background="@android:color/white"
         android:layout_width="150dp"
         android:layout_height="300dp"
         android:layout_marginRight="8dp"
