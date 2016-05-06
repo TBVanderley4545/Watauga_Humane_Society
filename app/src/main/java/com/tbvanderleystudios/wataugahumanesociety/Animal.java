@@ -12,14 +12,38 @@ public class Animal implements Parcelable {
     private String mAge;
     private String mBreed;
 
+    private String mScrapedURLAddress;
+    private String mHousetrained;
+    private String mDeclawed;
+    private String mDescription;
+
     public Animal(String name, Bitmap bitmapImage, String status,
-                  String gender, String age, String breed) {
+                  String gender, String age, String breed, String scrapedURLAddress) {
         mName = name;
         mBitmapImage = bitmapImage;
         mStatus = status;
         mGender = gender;
         mAge = age;
         mBreed = breed;
+        mScrapedURLAddress = scrapedURLAddress;
+        mHousetrained = "";
+        mDeclawed = "";
+        mDescription = "";
+    }
+
+    public Animal(String name, Bitmap bitmapImage, String status,
+                  String gender, String age, String breed, String housetrained,
+                  String declawed, String description) {
+        mName = name;
+        mBitmapImage = bitmapImage;
+        mStatus = status;
+        mGender = gender;
+        mAge = age;
+        mBreed = breed;
+        mHousetrained = housetrained;
+        mDeclawed = declawed;
+        mDescription = description;
+        mScrapedURLAddress = "";
     }
 
     public String getName() {
@@ -46,6 +70,21 @@ public class Animal implements Parcelable {
         return mBreed;
     }
 
+    public String getScrapedURLAddress() {
+        return mScrapedURLAddress;
+    }
+
+    public String getHousetrained() {
+        return mHousetrained;
+    }
+
+    public String getDeclawed() {
+        return mDeclawed;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
 
     public Animal(Parcel in) {
         mName = in.readString();
@@ -54,6 +93,10 @@ public class Animal implements Parcelable {
         mGender = in.readString();
         mAge = in.readString();
         mBreed = in.readString();
+        mScrapedURLAddress = in.readString();
+        mHousetrained = in.readString();
+        mDeclawed = in.readString();
+        mDescription = in.readString();
     }
 
     @Override
@@ -69,6 +112,10 @@ public class Animal implements Parcelable {
         dest.writeString(mGender);
         dest.writeString(mAge);
         dest.writeString(mBreed);
+        dest.writeString(mScrapedURLAddress);
+        dest.writeString(mHousetrained);
+        dest.writeString(mDeclawed);
+        dest.writeString(mDescription);
     }
 
     @SuppressWarnings("unused")

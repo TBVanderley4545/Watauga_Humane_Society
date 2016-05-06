@@ -60,6 +60,7 @@ public class MainActivity extends Activity {
         private String[] mGenderArray;
         private String[] mAgeArray;
         private String[] mBreedArray;
+        private String[] mScrapedAddressArray;
 
         @Override
         protected void onPreExecute() {
@@ -97,6 +98,7 @@ public class MainActivity extends Activity {
                 mAgeArray = new String[mAnimalCount];
                 mBreedArray = new String[mAnimalCount];
                 mAnimals = new Animal[mAnimalCount];
+                mScrapedAddressArray = new String[mAnimalCount];
 
                 // All arrays are having data parsed in
                 ParseData(nameSelector, mNamesArray);
@@ -105,6 +107,7 @@ public class MainActivity extends Activity {
                 ParseData(genderSelector, mGenderArray);
                 ParseData(ageSelector, mAgeArray);
                 ParseData(breedSelector, mBreedArray);
+                ParseURLAddress(nameSelector);
 
                 // Pass all elements into the Animal[] called mAnimals.
                 for (int i = 0; i < mAnimalCount; i++) {
@@ -113,7 +116,8 @@ public class MainActivity extends Activity {
                             mStatusArray[i],
                             mGenderArray[i],
                             mAgeArray[i],
-                            mBreedArray[i]);
+                            mBreedArray[i],
+                            mScrapedAddressArray[i]);
                 }
 
             } catch (IOException e) {
@@ -122,6 +126,8 @@ public class MainActivity extends Activity {
 
             return null;
         }
+
+
 
         @Override
         protected void onPostExecute(Void aVoid) {
@@ -156,6 +162,14 @@ public class MainActivity extends Activity {
             int iterator = 0;
             for(Element element : selector) {
                 array[iterator] = element.text();
+                iterator++;
+            }
+        }
+
+        private void ParseURLAddress(Elements nameSelector) {
+            int iterator = 0;
+            for (Element link : nameSelector) {
+                mScrapedAddressArray[iterator] = link.absUrl("href");
                 iterator++;
             }
         }
