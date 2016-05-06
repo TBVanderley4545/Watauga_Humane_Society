@@ -12,6 +12,7 @@
     
     <ImageView
         android:id="@+id/animalDetailPic"
+        android:background="@android:color/white"
         android:layout_width="150dp"
         android:layout_height="300dp"
         android:layout_marginRight="8dp"
@@ -92,6 +93,17 @@
         android:layout_below="@id/animalDetailAge"
         android:textColor="@android:color/white"
         android:textSize="@dimen/detail_item_size"
+        tools:text="Domestic Medium Hair / Mix"/>
+
+    <TextView
+        android:id="@+id/animalDetailDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/detail_margin_below"
+        android:layout_toRightOf="@id/animalDetailPic"
+        android:layout_below="@id/animalDetailBreed"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
         tools:text="Domestic Medium Hair / Mix"/>
 
 </RelativeLayout>

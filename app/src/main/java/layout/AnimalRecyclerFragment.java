@@ -52,7 +52,7 @@ public class AnimalRecyclerFragment extends Fragment {
             @Override
             public void onClick(int position) {
                 Intent intent = new Intent(getActivity(), AnimalDetailActivity.class);
-                intent.putExtra(AnimalDetailActivity.EXTRA_ANIMAL_POSITION_NO, mAnimals[position]);
+                intent.putExtra(AnimalDetailActivity.EXTRA_ANIMAL_POSITION_NO, mAnimals[position].getScrapedURLAddress());
                 getActivity().startActivity(intent);
             }
         });
