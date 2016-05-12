@@ -55,7 +55,13 @@ public class AnimalDetailActivity extends AppCompatActivity {
         mAnimalDetailBreed = (TextView) findViewById(R.id.animalDetailBreed);
         mAnimalDescription = (TextView) findViewById(R.id.animalDetailDescription);
 
-        new GetAnimalDetailTask().execute();
+        ValidationChecker vCheck = new ValidationChecker(this);
+        if(vCheck.isNetworkAvailable()) {
+            new GetAnimalDetailTask().execute();
+        } else {
+            Toast.makeText(this, R.string.network_unavailable, Toast.LENGTH_LONG).show();
+        }
+
     }
 
 

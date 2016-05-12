@@ -2,5 +2,6 @@
     <string name="app_name">Watauga Humane Society</string>
     <string name="whs_logo_description">Watauga Humane Society Logo</string>
     <string name="whs_name_text_view">WATAUGA HUMANE SOCIETY</string>
+    <string name="network_unavailable">Network Unavailable</string>
 
 </resources>

@@ -38,8 +38,16 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(getFragmentManager().findFragmentById(R.id.content_frame) == null) {
-            new GetAnimalsTask().execute();
+        ValidationChecker vCheck = new ValidationChecker(this);
+
+        if(vCheck.isNetworkAvailable()) {
+
+            if (getFragmentManager().findFragmentById(R.id.content_frame) == null) {
+                new GetAnimalsTask().execute();
+            }
+
+        } else {
+            Toast.makeText(this, R.string.network_unavailable, Toast.LENGTH_LONG).show();
         }
 
         TextView whsNameTextView = (TextView) findViewById(R.id.whsNameTextView);
