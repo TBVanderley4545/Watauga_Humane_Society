@@ -94,7 +94,7 @@ public class AnimalDetailActivity extends AppCompatActivity {
 
                 // Create all of the element selectors.
                 Elements nameSelector = document.select(".animal-listing__title > a");
-                Elements bitmapImageSelector = document.select(".slick-track > img:nth-child(2)");
+                Elements bitmapImageSelector = document.select("img:nth-child(1)");
                 Elements statusSelector = document.select(".animal-listing__subtitle:nth-child(2)");
                 Elements genderSelector = document.select(".animal-listing__subtitle:nth-child(3)");
                 Elements housetrainedSelector = document.select(".animal-listing__subtitle:nth-child(4)");
@@ -123,8 +123,6 @@ public class AnimalDetailActivity extends AppCompatActivity {
 
             return null;
         }
-
-
 
         @Override
         protected void onPostExecute(Void aVoid) {
