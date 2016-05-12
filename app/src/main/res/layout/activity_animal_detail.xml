@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,100 +9,100 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#490A3D"
     tools:context="com.tbvanderleystudios.wataugahumanesociety.AnimalDetailActivity">
-    
-    <ImageView
-        android:id="@+id/animalDetailPic"
-        android:layout_width="150dp"
-        android:layout_height="300dp"
-        android:layout_marginRight="8dp"
-        android:scaleType="fitStart"
-        tools:src="@drawable/wilbur" />
-    
-    <TextView
-        android:id="@+id/animalDetailName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_toRightOf="@id/animalDetailPic"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
-        tools:text="Wilbur"/>
 
-    <TextView
-        android:id="@+id/animalDetailStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/detail_margin_below"
-        android:layout_toRightOf="@+id/animalDetailPic"
-        android:layout_below="@id/animalDetailName"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/detail_item_size"
-        tools:text="Status: Stray Hold"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/animalDetailGender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/detail_margin_below"
-        android:layout_toRightOf="@id/animalDetailPic"
-        android:layout_below="@id/animalDetailStatus"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/detail_item_size"
-        tools:text="Sex: Male"/>
+        <ImageView
+            android:id="@+id/animalDetailPic"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginRight="8dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitCenter"
+            tools:src="@drawable/wilbur" />
 
-    <TextView
-        android:id="@+id/animalDetailHousetrained"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/detail_margin_below"
-        android:layout_toRightOf="@id/animalDetailPic"
-        android:layout_below="@id/animalDetailGender"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/detail_item_size"
-        tools:text="Housetrained: Unknown"/>
+        <TextView
+            android:id="@+id/animalDetailName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/animalDetailPic"
+            android:textColor="@android:color/white"
+            android:textSize="32sp"
+            tools:text="Wilbur"/>
 
-    <TextView
-        android:id="@+id/animalDetailDeclawed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/detail_margin_below"
-        android:layout_toRightOf="@id/animalDetailPic"
-        android:layout_below="@id/animalDetailHousetrained"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/detail_item_size"
-        tools:text="Declawed: No"/>
+        <TextView
+            android:id="@+id/animalDetailStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/detail_margin_below"
+            android:layout_below="@id/animalDetailName"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/detail_item_size"
+            tools:text="Status: Stray Hold"/>
 
-    <TextView
-        android:id="@+id/animalDetailAge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/detail_margin_below"
-        android:layout_toRightOf="@id/animalDetailPic"
-        android:layout_below="@id/animalDetailDeclawed"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/detail_item_size"
-        tools:text="Age: 1 month(s)"/>
+        <TextView
+            android:id="@+id/animalDetailGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/detail_margin_below"
+            android:layout_below="@id/animalDetailStatus"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/detail_item_size"
+            tools:text="Sex: Male"/>
 
-    <TextView
-        android:id="@+id/animalDetailBreed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/detail_margin_below"
-        android:layout_toRightOf="@id/animalDetailPic"
-        android:layout_below="@id/animalDetailAge"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/detail_item_size"
-        tools:text="Domestic Medium Hair / Mix"/>
+        <TextView
+            android:id="@+id/animalDetailHousetrained"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/detail_margin_below"
+            android:layout_below="@id/animalDetailGender"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/detail_item_size"
+            tools:text="Housetrained: Unknown"/>
 
-    <TextView
-        android:id="@+id/animalDetailDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/detail_margin_below"
-        android:layout_toRightOf="@id/animalDetailPic"
-        android:layout_below="@id/animalDetailBreed"
-        android:textColor="@android:color/white"
-        android:textSize="12sp"
-        tools:text="Domestic Medium Hair / Mix"/>
+        <TextView
+            android:id="@+id/animalDetailDeclawed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/detail_margin_below"
+            android:layout_below="@id/animalDetailHousetrained"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/detail_item_size"
+            tools:text="Declawed: No"/>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/animalDetailAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/detail_margin_below"
+            android:layout_below="@id/animalDetailDeclawed"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/detail_item_size"
+            tools:text="Age: 1 month(s)"/>
+
+        <TextView
+            android:id="@+id/animalDetailBreed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/detail_margin_below"
+            android:layout_below="@id/animalDetailAge"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/detail_item_size"
+            tools:text="Domestic Medium Hair / Mix"/>
+
+        <TextView
+            android:id="@+id/animalDetailDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/detail_margin_below"
+            android:layout_below="@id/animalDetailBreed"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            tools:text="Domestic Medium Hair / Mix"/>
+
+    </RelativeLayout>
+
+</ScrollView>

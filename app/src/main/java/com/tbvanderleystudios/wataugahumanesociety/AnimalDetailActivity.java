@@ -132,7 +132,11 @@ public class AnimalDetailActivity extends AppCompatActivity {
                     mAge, mBreed, mHouseTrained, mDeclawed, mDescription);
 
             mAnimalDetailPic.setImageBitmap(animal.getBitmapImage());
-            mAnimalDetailName.setText(animal.getName().toUpperCase());
+            if(animal.getName() != null) {
+                mAnimalDetailName.setText(animal.getName().toUpperCase());
+            } else {
+                mAnimalDetailName.setText("Oops, an error occurred.");
+            }
             mAnimalDetailStatus.setText(animal.getStatus());
             mAnimalDetailGender.setText(animal.getGender());
             mAnimalDetailHoustrained.setText(animal.getHousetrained());
@@ -144,7 +148,6 @@ public class AnimalDetailActivity extends AppCompatActivity {
             Typeface fishFingersFont = Typeface.createFromAsset(getAssets(), "Fishfingers.ttf");
             if(mAnimalDetailName != null) {
                 mAnimalDetailName.setTypeface(fishFingersFont);
-
             }
 
 
