@@ -88,6 +88,7 @@ public class AnimalDetailActivity extends AppCompatActivity {
             mProgressDialog.setTitle("Gathering Information!");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
+            mProgressDialog.setCanceledOnTouchOutside(false);
             mProgressDialog.show();
         }
 
