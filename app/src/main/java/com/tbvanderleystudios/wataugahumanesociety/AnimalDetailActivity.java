@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -24,9 +23,11 @@ import java.io.InputStream;
 public class AnimalDetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_ANIMAL_POSITION_NO = "animalPositionNumber";
+    public static final String SAVED_ANIMAL_OBJECT = "saved Animal Object";
 
     private String scrapedURLAddress;
 
+    private Animal mAnimal;
     private ImageView mAnimalDetailPic;
     private TextView mAnimalDetailName;
     private TextView mAnimalDetailStatus;
@@ -45,6 +46,7 @@ public class AnimalDetailActivity extends AppCompatActivity {
 
         scrapedURLAddress = getIntent().getStringExtra(EXTRA_ANIMAL_POSITION_NO);
 
+
         mAnimalDetailPic = (ImageView) findViewById(R.id.animalDetailPic);
         mAnimalDetailName = (TextView) findViewById(R.id.animalDetailName);
         mAnimalDetailStatus = (TextView) findViewById(R.id.animalDetailStatus);
@@ -55,19 +57,43 @@ public class AnimalDetailActivity extends AppCompatActivity {
         mAnimalDetailBreed = (TextView) findViewById(R.id.animalDetailBreed);
         mAnimalDescription = (TextView) findViewById(R.id.animalDetailDescription);
 
-        ValidationChecker vCheck = new ValidationChecker(this);
-        if(vCheck.isNetworkAvailable()) {
-            new GetAnimalDetailTask().execute();
+        if (savedInstanceState != null) {
+            mAnimal = savedInstanceState.getParcelable(SAVED_ANIMAL_OBJECT);
+            updateUI();
         } else {
-            Toast.makeText(this, R.string.network_unavailable, Toast.LENGTH_LONG).show();
+            ValidationChecker vCheck = new ValidationChecker(this);
+            if (vCheck.isNetworkAvailable()) {
+                new GetAnimalDetailTask().execute();
+            } else {
+                Toast.makeText(this, R.string.network_unavailable, Toast.LENGTH_LONG).show();
+            }
         }
+    }
 
+    private void updateUI() {
+        mAnimalDetailPic.setImageBitmap(mAnimal.getBitmapImage());
+        if(mAnimal.getName() != null) {
+            mAnimalDetailName.setText(mAnimal.getName().toUpperCase());
+        } else {
+            mAnimalDetailName.setText("Oops, an error occurred.");
+        }
+        mAnimalDetailStatus.setText(mAnimal.getStatus());
+        mAnimalDetailGender.setText(mAnimal.getGender());
+        mAnimalDetailHoustrained.setText(mAnimal.getHousetrained());
+        mAnimalDetailDeclawed.setText(mAnimal.getDeclawed());
+        mAnimalDetailAge.setText(mAnimal.getAge());
+        mAnimalDetailBreed.setText(mAnimal.getBreed());
+        mAnimalDescription.setText(mAnimal.getDescription());
+
+        Typeface fishFingersFont = Typeface.createFromAsset(getAssets(), "Fishfingers.ttf");
+        if(mAnimalDetailName != null) {
+            mAnimalDetailName.setTypeface(fishFingersFont);
+        }
     }
 
 
     private class GetAnimalDetailTask extends AsyncTask<Void, Void, Void> {
 
-        private Animal animal;
         private ProgressDialog mProgressDialog = new ProgressDialog(AnimalDetailActivity.this);
         private String mName;
         private Bitmap mBitmapImage;
@@ -135,28 +161,10 @@ public class AnimalDetailActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            animal = new Animal(mName, mBitmapImage, mStatus, mGender,
+            mAnimal = new Animal(mName, mBitmapImage, mStatus, mGender,
                     mAge, mBreed, mHouseTrained, mDeclawed, mDescription);
 
-            mAnimalDetailPic.setImageBitmap(animal.getBitmapImage());
-            if(animal.getName() != null) {
-                mAnimalDetailName.setText(animal.getName().toUpperCase());
-            } else {
-                mAnimalDetailName.setText("Oops, an error occurred.");
-            }
-            mAnimalDetailStatus.setText(animal.getStatus());
-            mAnimalDetailGender.setText(animal.getGender());
-            mAnimalDetailHoustrained.setText(animal.getHousetrained());
-            mAnimalDetailDeclawed.setText(animal.getDeclawed());
-            mAnimalDetailAge.setText(animal.getAge());
-            mAnimalDetailBreed.setText(animal.getBreed());
-            mAnimalDescription.setText(animal.getDescription());
-
-            Typeface fishFingersFont = Typeface.createFromAsset(getAssets(), "Fishfingers.ttf");
-            if(mAnimalDetailName != null) {
-                mAnimalDetailName.setTypeface(fishFingersFont);
-            }
-
+            updateUI();
 
             mProgressDialog.dismiss();
 
@@ -175,5 +183,12 @@ public class AnimalDetailActivity extends AppCompatActivity {
         private void unlockScreenOrientation() {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(SAVED_ANIMAL_OBJECT, mAnimal);
+
+        super.onSaveInstanceState(outState);
     }
 }
