@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ValidationChecker vCheck = new ValidationChecker(this);
+        final ValidationChecker vCheck = new ValidationChecker(this);
 
         if(vCheck.isNetworkAvailable()) {
 
@@ -60,7 +60,14 @@ public class MainActivity extends Activity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new GetAnimalsTask().execute();
+                if (vCheck.isNetworkAvailable()) {
+                    new GetAnimalsTask().execute();
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.network_unavailable, Toast.LENGTH_LONG).show();
+                    if(mSwipeRefreshLayout.isRefreshing()) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }
             }
         });
     }
