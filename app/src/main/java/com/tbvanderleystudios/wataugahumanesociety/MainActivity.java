@@ -13,6 +13,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ public class MainActivity extends Activity {
 
     public static final String ANIMALS = "animals";
     private Animal[] mAnimals;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,14 @@ public class MainActivity extends Activity {
         TextView whsNameTextView = (TextView) findViewById(R.id.whsNameTextView);
         Typeface fishFingersFont = Typeface.createFromAsset(getAssets(), "Fishfingers.ttf");
         whsNameTextView.setTypeface(fishFingersFont);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new GetAnimalsTask().execute();
+            }
+        });
     }
 
 
@@ -80,7 +90,9 @@ public class MainActivity extends Activity {
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.setCancelable(false);
-            mProgressDialog.show();
+            if(mSwipeRefreshLayout == null) {
+                mProgressDialog.show();
+            }
         }
 
         @Override
@@ -151,6 +163,9 @@ public class MainActivity extends Activity {
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();
 
+            if(mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
             mProgressDialog.dismiss();
 
             unlockScreenOrientation();

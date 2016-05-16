@@ -27,11 +27,19 @@
         android:textColor="@android:color/white"
         android:text="@string/whs_name_text_view"/>
 
-    <FrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/logoImageView"/>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/whsNameTextView">
+
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/logoImageView"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
 
