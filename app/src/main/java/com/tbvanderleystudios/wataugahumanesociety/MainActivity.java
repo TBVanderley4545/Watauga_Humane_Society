@@ -79,7 +79,7 @@ public class MainActivity extends Activity {
             mProgressDialog.setTitle("Looking For Animals Now!");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
-            mProgressDialog.setCanceledOnTouchOutside(false);
+            mProgressDialog.setCancelable(false);
             mProgressDialog.show();
         }
 
