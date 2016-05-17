@@ -1,5 +1,6 @@
 package com.tbvanderleystudios.wataugahumanesociety;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -7,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +20,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class AnimalDetailActivity extends AppCompatActivity {
+public class AnimalDetailActivity extends Activity {
 
     public static final String EXTRA_ANIMAL_POSITION_NO = "animalPositionNumber";
     public static final String SAVED_ANIMAL_OBJECT = "saved Animal Object";
