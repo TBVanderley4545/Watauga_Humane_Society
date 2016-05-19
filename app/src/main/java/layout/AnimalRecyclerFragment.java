@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AnimalRecyclerFragment extends Fragment implements SearchView.OnQueryTextListener{
+public class AnimalRecyclerFragment extends Fragment {
 
     private RecyclerView mAnimalRecycler;
     private List<Animal> mAnimalList;
@@ -90,20 +90,21 @@ public class AnimalRecyclerFragment extends Fragment implements SearchView.OnQue
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setQueryHint(getActivity().getString(R.string.search_hint));
 
-        searchView.setOnQueryTextListener(this);
-    }
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                final List<Animal> filteredAnimalList = filter(mAnimalList, newText);
+                mAnimalAdapter.animateTo(filteredAnimalList);
+                mAnimalRecycler.scrollToPosition(0);
+                return true;
+            }
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        final List<Animal> filteredAnimalList = filter(mAnimalList, newText);
-        mAnimalAdapter.animateTo(filteredAnimalList);
-        mAnimalRecycler.scrollToPosition(0);
-        return true;
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchView.clearFocus();
+                return false;
+            }
+        });
     }
 
     private List<Animal> filter(List<Animal> animals, String query) {
