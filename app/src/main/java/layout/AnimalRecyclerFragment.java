@@ -88,6 +88,7 @@ public class AnimalRecyclerFragment extends Fragment implements SearchView.OnQue
 
         final MenuItem item = menu.findItem(R.id.search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setQueryHint(getActivity().getString(R.string.search_hint));
 
         searchView.setOnQueryTextListener(this);
     }
