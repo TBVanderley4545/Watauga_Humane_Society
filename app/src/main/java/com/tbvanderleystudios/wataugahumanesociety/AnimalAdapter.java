@@ -1,5 +1,6 @@
 package com.tbvanderleystudios.wataugahumanesociety;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder>{
 
-    private Animal[] mAnimals;
+    private List<Animal> mAnimals;
     private Listener mListener;
+    private final LayoutInflater mInflater;
 
     public interface Listener {
         void onClick(int position);
@@ -26,8 +31,9 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         }
     }
 
-    public AnimalAdapter(Animal[] animals) {
-        mAnimals = animals;
+    public AnimalAdapter(Context context, List<Animal> animals) {
+        mInflater = LayoutInflater.from(context);
+        mAnimals = new ArrayList<>(animals);
     }
 
     public void setListener(Listener listener) {
@@ -37,9 +43,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     @Override
     public AnimalAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        CardView cardView = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.animal_list_card, parent, false);
-
+        CardView cardView = (CardView) mInflater.inflate(R.layout.animal_list_card, parent, false);
         return new ViewHolder(cardView);
     }
 
@@ -48,23 +52,23 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         CardView cardView = holder.cardView;
 
         ImageView animalImageView = (ImageView) cardView.findViewById(R.id.animalImageView);
-        animalImageView.setImageBitmap(mAnimals[position].getBitmapImage());
-        animalImageView.setContentDescription(mAnimals[position].getName());
+        animalImageView.setImageBitmap(mAnimals.get(position).getBitmapImage());
+        animalImageView.setContentDescription(mAnimals.get(position).getName());
 
         TextView animalNameTextView = (TextView) cardView.findViewById(R.id.animalNameTextView);
-        animalNameTextView.setText(mAnimals[position].getName().toUpperCase());
+        animalNameTextView.setText(mAnimals.get(position).getName().toUpperCase());
 
         TextView animalBreedTextView = (TextView) cardView.findViewById(R.id.animalBreedTextView);
-        animalBreedTextView.setText(mAnimals[position].getBreed());
+        animalBreedTextView.setText(mAnimals.get(position).getBreed());
 
         TextView animalStatusTextView = (TextView) cardView.findViewById(R.id.animalStatusTextView);
-        animalStatusTextView.setText(mAnimals[position].getStatus());
+        animalStatusTextView.setText(mAnimals.get(position).getStatus());
 
         TextView animalGenderTextView = (TextView) cardView.findViewById(R.id.animalGenderTextView);
-        animalGenderTextView.setText(mAnimals[position].getGender());
+        animalGenderTextView.setText(mAnimals.get(position).getGender());
 
         TextView animalAgeTextView = (TextView) cardView.findViewById(R.id.animalAgeTextView);
-        animalAgeTextView.setText(mAnimals[position].getAge());
+        animalAgeTextView.setText(mAnimals.get(position).getAge());
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +82,57 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return mAnimals.length;
+        return mAnimals.size();
+    }
+
+    public void animateTo(List<Animal> animals) {
+        applyAndAnimateRemovals(animals);
+        applyAndAnimateAdditions(animals);
+        applyAndAnimateMovedItems(animals);
+    }
+
+    private void applyAndAnimateRemovals(List<Animal> newAnimals) {
+        for (int i = mAnimals.size() - 1; i >= 0; i--) {
+            final Animal animal = mAnimals.get(i);
+            if(!newAnimals.contains(animal)) {
+                removeItem(i);
+            }
+        }
+    }
+
+    private void applyAndAnimateAdditions(List<Animal> newAnimals) {
+        for (int i = 0; i < newAnimals.size(); i++) {
+            final Animal animal = newAnimals.get(i);
+            if(!mAnimals.contains(animal)) {
+                addItem(i, animal);
+            }
+        }
+    }
+
+    private void applyAndAnimateMovedItems(List<Animal> newAnimals) {
+        for (int toPosition = newAnimals.size() - 1; toPosition >= 0; toPosition--) {
+            final Animal animal = newAnimals.get(toPosition);
+            final int fromPosition = mAnimals.indexOf(animal);
+            if(fromPosition >= 0 && fromPosition != toPosition) {
+                moveItem(fromPosition, toPosition);
+            }
+        }
+    }
+
+    public Animal removeItem(int position) {
+        final Animal animal = mAnimals.remove(position);
+        notifyItemRemoved(position);
+        return animal;
+    }
+
+    public void addItem(int position, Animal animal) {
+        mAnimals.add(position, animal);
+        notifyItemInserted(position);
+    }
+
+    public void moveItem(int fromPosition, int toPosition) {
+        final Animal animal = mAnimals.remove(fromPosition);
+        mAnimals.add(toPosition, animal);
+        notifyItemMoved(fromPosition, toPosition);
     }
 }

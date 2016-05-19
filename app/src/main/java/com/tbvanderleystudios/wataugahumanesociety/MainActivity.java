@@ -70,6 +70,7 @@ public class MainActivity extends Activity {
         });
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -77,6 +78,7 @@ public class MainActivity extends Activity {
 
         return true;
     }
+    */
 
     private class GetAnimalsTask extends AsyncTask<Void, Void, Void> {
 

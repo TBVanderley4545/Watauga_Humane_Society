@@ -5,11 +5,16 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.tbvanderleystudios.wataugahumanesociety.Animal;
 import com.tbvanderleystudios.wataugahumanesociety.AnimalAdapter;
@@ -17,9 +22,16 @@ import com.tbvanderleystudios.wataugahumanesociety.AnimalDetailActivity;
 import com.tbvanderleystudios.wataugahumanesociety.MainActivity;
 import com.tbvanderleystudios.wataugahumanesociety.R;
 
-public class AnimalRecyclerFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    private Animal[] mAnimals;
+public class AnimalRecyclerFragment extends Fragment implements SearchView.OnQueryTextListener{
+
+    private RecyclerView mAnimalRecycler;
+    private List<Animal> mAnimalList;
+    private AnimalAdapter mAnimalAdapter;
+    private List<Animal> mFilteredAnimalList;
 
     public AnimalRecyclerFragment() {
         // Required empty public constructor
@@ -37,22 +49,28 @@ public class AnimalRecyclerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
 
-        RecyclerView animalRecycler = (RecyclerView) inflater.inflate(R.layout.fragment_animal_recycler,
+        mAnimalRecycler = (RecyclerView) inflater.inflate(R.layout.fragment_animal_recycler,
                 container, false);
 
-        mAnimals = (Animal[]) getArguments().getParcelableArray(MainActivity.ANIMALS);
+        Animal[] animals = (Animal[]) getArguments().getParcelableArray(MainActivity.ANIMALS);
+        mAnimalList = Arrays.asList(animals);
 
-        AnimalAdapter adapter = new AnimalAdapter(mAnimals);
-        animalRecycler.setAdapter(adapter);
+        mAnimalAdapter = new AnimalAdapter(getActivity(), mAnimalList);
+        mAnimalRecycler.setAdapter(mAnimalAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        animalRecycler.setLayoutManager(layoutManager);
+        mAnimalRecycler.setLayoutManager(layoutManager);
 
-        adapter.setListener(new AnimalAdapter.Listener(){
+        mAnimalAdapter.setListener(new AnimalAdapter.Listener(){
             @Override
             public void onClick(int position) {
                 Intent intent = new Intent(getActivity(), AnimalDetailActivity.class);
-                intent.putExtra(AnimalDetailActivity.EXTRA_ANIMAL_POSITION_NO, mAnimals[position].getScrapedURLAddress());
+                if(mFilteredAnimalList == null) {
+                    intent.putExtra(AnimalDetailActivity.EXTRA_ANIMAL_POSITION_NO, mAnimalList.get(position).getScrapedURLAddress());
+                } else {
+                    intent.putExtra(AnimalDetailActivity.EXTRA_ANIMAL_POSITION_NO, mFilteredAnimalList.get(position).getScrapedURLAddress());
+                }
                 getActivity().startActivity(intent);
             }
         });
@@ -61,6 +79,42 @@ public class AnimalRecyclerFragment extends Fragment {
         setRetainInstance(true);
 
         // Inflate the layout for this fragment
-        return animalRecycler;
+        return mAnimalRecycler;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.options_menu, menu);
+
+        final MenuItem item = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+
+        searchView.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        final List<Animal> filteredAnimalList = filter(mAnimalList, newText);
+        mAnimalAdapter.animateTo(filteredAnimalList);
+        mAnimalRecycler.scrollToPosition(0);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    private List<Animal> filter(List<Animal> animals, String query) {
+        query = query.toLowerCase();
+
+        mFilteredAnimalList = new ArrayList<>();
+        for(Animal animal : animals) {
+            final String name = animal.getName().toLowerCase();
+            if(name.contains(query)) {
+                mFilteredAnimalList.add(animal);
+            }
+        }
+        return mFilteredAnimalList;
     }
 }
