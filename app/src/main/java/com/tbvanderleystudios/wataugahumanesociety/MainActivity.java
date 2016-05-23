@@ -1,5 +1,6 @@
 package com.tbvanderleystudios.wataugahumanesociety;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -12,8 +13,11 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,10 +53,6 @@ public class MainActivity extends Activity {
         } else {
             Toast.makeText(this, R.string.network_unavailable, Toast.LENGTH_LONG).show();
         }
-
-        TextView whsNameTextView = (TextView) findViewById(R.id.whsNameTextView);
-        Typeface fishFingersFont = Typeface.createFromAsset(getAssets(), "Fishfingers.ttf");
-        whsNameTextView.setTypeface(fishFingersFont);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
