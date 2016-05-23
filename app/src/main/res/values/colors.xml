@@ -3,6 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="wataugaHumanePurple">#490A3D</color>
+    <color name="wataugaHumanePurple">#490A4D</color>
     <color name="wataugaHumaneGreen">#8A9B0F</color>
+    <color name="wataugeHumaneColorPrimary">#3A083D</color>
+    <color name="wataugeHumaneColorPrimaryDark">#240526</color>
 </resources>
