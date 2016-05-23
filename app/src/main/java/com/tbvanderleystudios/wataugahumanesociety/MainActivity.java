@@ -1,6 +1,5 @@
 package com.tbvanderleystudios.wataugahumanesociety;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -9,16 +8,9 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.jsoup.Jsoup;
@@ -70,15 +62,6 @@ public class MainActivity extends Activity {
         });
     }
 
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
-
-        return true;
-    }
-    */
 
     private class GetAnimalsTask extends AsyncTask<Void, Void, Void> {
 
