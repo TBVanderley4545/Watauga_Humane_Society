@@ -5,5 +5,12 @@
     <string name="network_unavailable">Network Unavailable</string>
     <string name="search_title">Search</string>
     <string name="search_hint">Enter a name...</string>
-
+    <string-array name="drawer_items">
+        <item>All Animals</item>
+        <item>Dogs</item>
+        <item>Cats</item>
+        <item>Puppies</item>
+        <item>Kittens</item>
+        <item>Other Animals</item>
+    </string-array>
 </resources>

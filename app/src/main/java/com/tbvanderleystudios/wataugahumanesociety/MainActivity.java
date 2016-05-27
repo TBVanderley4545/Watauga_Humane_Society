@@ -11,6 +11,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.jsoup.Jsoup;
@@ -28,11 +30,16 @@ public class MainActivity extends Activity {
     public static final String ANIMALS = "animals";
     private Animal[] mAnimals;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ListView mNavigationDrawer;
+    private ArrayAdapter<String> mNavDrawerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mNavigationDrawer = (ListView) findViewById(R.id.navigationDrawer);
+        addDrawerItems();
 
         final ValidationChecker vCheck = new ValidationChecker(this);
 
@@ -60,6 +67,12 @@ public class MainActivity extends Activity {
                 }
             }
         });
+    }
+
+    private void addDrawerItems() {
+        String [] drawerItems = getResources().getStringArray(R.array.drawer_items);
+        mNavDrawerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, drawerItems);
+        mNavigationDrawer.setAdapter(mNavDrawerAdapter);
     }
 
 
