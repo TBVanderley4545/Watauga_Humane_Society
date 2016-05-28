@@ -11,6 +11,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -32,15 +34,16 @@ public class MainActivity extends Activity {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ListView mNavigationDrawer;
     private ArrayAdapter<String> mNavDrawerAdapter;
+    private String[] mDrawerItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mNavigationDrawer = (ListView) findViewById(R.id.navigationDrawer);
-        addDrawerItems();
+        createNavigationDrawer();
 
+        // Check if network is available.
         final ValidationChecker vCheck = new ValidationChecker(this);
 
         if(vCheck.isNetworkAvailable()) {
@@ -53,6 +56,7 @@ public class MainActivity extends Activity {
             Toast.makeText(this, R.string.network_unavailable, Toast.LENGTH_LONG).show();
         }
 
+        // Set swipeRefreshLayout
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -69,9 +73,21 @@ public class MainActivity extends Activity {
         });
     }
 
+    private void createNavigationDrawer() {
+        mNavigationDrawer = (ListView) findViewById(R.id.navigationDrawer);
+        addDrawerItems();
+        mNavigationDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String testedSelector = mDrawerItems[position];
+                Toast.makeText(MainActivity.this, "You selected " + testedSelector, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private void addDrawerItems() {
-        String [] drawerItems = getResources().getStringArray(R.array.drawer_items);
-        mNavDrawerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, drawerItems);
+        mDrawerItems = getResources().getStringArray(R.array.drawer_items);
+        mNavDrawerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mDrawerItems);
         mNavigationDrawer.setAdapter(mNavDrawerAdapter);
     }
 
