@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
         if(vCheck.isNetworkAvailable()) {
 
             if (getFragmentManager().findFragmentById(R.id.content_frame) == null) {
-                new GetAnimalsTask("all animals").execute();
+                new GetAnimalsTask("all animals", 1).execute();
             }
 
         } else {
@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
             @Override
             public void onRefresh() {
                 if (vCheck.isNetworkAvailable()) {
-                    new GetAnimalsTask("all animals").execute();
+                    new GetAnimalsTask("all animals", 0).execute();
                 } else {
                     Toast.makeText(MainActivity.this, R.string.network_unavailable, Toast.LENGTH_LONG).show();
                     if(mSwipeRefreshLayout.isRefreshing()) {
@@ -81,7 +81,9 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = mDrawerItems[position];
-                new GetAnimalsTask(selectedItem).execute();
+                new GetAnimalsTask(selectedItem, 1).execute();
+
+                // Create a reference to the DrawerLayout and then close the drawer.
                 DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawerLayout.closeDrawer(mNavigationDrawer);
             }
@@ -90,7 +92,7 @@ public class MainActivity extends Activity {
 
     private void addDrawerItems() {
         mDrawerItems = getResources().getStringArray(R.array.drawer_items);
-        mNavDrawerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mDrawerItems);
+        mNavDrawerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mDrawerItems);
         mNavigationDrawer.setAdapter(mNavDrawerAdapter);
     }
 
@@ -99,6 +101,7 @@ public class MainActivity extends Activity {
 
         private String mURLAddress;
         private String mSelectedItem;
+        private int mShowDialogFlag;
         private int mAnimalCount;
         private Bitmap bitmap;
         private ProgressDialog mProgressDialog = new ProgressDialog(MainActivity.this);
@@ -110,8 +113,9 @@ public class MainActivity extends Activity {
         private String[] mBreedArray;
         private String[] mScrapedAddressArray;
 
-        public GetAnimalsTask(String selectedItem) {
+        public GetAnimalsTask(String selectedItem, int showDialogFlag) {
             mSelectedItem = selectedItem;
+            mShowDialogFlag = showDialogFlag;
         }
 
         @Override
@@ -120,6 +124,7 @@ public class MainActivity extends Activity {
 
             lockScreenOrientation();
 
+            // Determine which item was selected and then pull from the proper URL.
             switch (mSelectedItem.toLowerCase()) {
                 case "all animals":
                     mURLAddress = "http://wataugahumane.org/animals";
@@ -147,8 +152,12 @@ public class MainActivity extends Activity {
             mProgressDialog.setTitle("Looking For Animals Now!");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
+
+            // Prevent cancelling the AsyncTask.
             mProgressDialog.setCancelable(false);
-            if(mSwipeRefreshLayout == null || !mURLAddress.equalsIgnoreCase("http://wataugahumane.org/animals")) {
+
+            // Don't show ProgressDialog when refreshing as indicated by the flag.
+            if(mShowDialogFlag == 1) {
                 mProgressDialog.show();
             }
         }
