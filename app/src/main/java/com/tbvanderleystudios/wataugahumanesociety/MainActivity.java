@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
@@ -49,7 +50,7 @@ public class MainActivity extends Activity {
         if(vCheck.isNetworkAvailable()) {
 
             if (getFragmentManager().findFragmentById(R.id.content_frame) == null) {
-                new GetAnimalsTask().execute();
+                new GetAnimalsTask("all animals").execute();
             }
 
         } else {
@@ -62,7 +63,7 @@ public class MainActivity extends Activity {
             @Override
             public void onRefresh() {
                 if (vCheck.isNetworkAvailable()) {
-                    new GetAnimalsTask().execute();
+                    new GetAnimalsTask("all animals").execute();
                 } else {
                     Toast.makeText(MainActivity.this, R.string.network_unavailable, Toast.LENGTH_LONG).show();
                     if(mSwipeRefreshLayout.isRefreshing()) {
@@ -79,8 +80,10 @@ public class MainActivity extends Activity {
         mNavigationDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String testedSelector = mDrawerItems[position];
-                Toast.makeText(MainActivity.this, "You selected " + testedSelector, Toast.LENGTH_LONG).show();
+                String selectedItem = mDrawerItems[position];
+                new GetAnimalsTask(selectedItem).execute();
+                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawerLayout.closeDrawer(mNavigationDrawer);
             }
         });
     }
@@ -94,7 +97,8 @@ public class MainActivity extends Activity {
 
     private class GetAnimalsTask extends AsyncTask<Void, Void, Void> {
 
-        private String mURLAddress = "http://wataugahumane.org/animals";
+        private String mURLAddress;
+        private String mSelectedItem;
         private int mAnimalCount;
         private Bitmap bitmap;
         private ProgressDialog mProgressDialog = new ProgressDialog(MainActivity.this);
@@ -106,17 +110,45 @@ public class MainActivity extends Activity {
         private String[] mBreedArray;
         private String[] mScrapedAddressArray;
 
+        public GetAnimalsTask(String selectedItem) {
+            mSelectedItem = selectedItem;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
             lockScreenOrientation();
 
+            switch (mSelectedItem.toLowerCase()) {
+                case "all animals":
+                    mURLAddress = "http://wataugahumane.org/animals";
+                    break;
+                case "dogs":
+                    mURLAddress = "http://wataugahumane.org/types/dogs";
+                    break;
+                case "cats":
+                    mURLAddress = "http://wataugahumane.org/types/cats";
+                    break;
+                case "puppies":
+                    mURLAddress = "http://wataugahumane.org/types/puppies";
+                    break;
+                case "kittens":
+                    mURLAddress = "http://wataugahumane.org/types/kittens";
+                    break;
+                case "other animals":
+                    mURLAddress = "http://wataugahumane.org/types/other-animals";
+                    break;
+                default:
+                    mURLAddress = "http://wataugahumane.org/animals";
+                    break;
+            }
+
             mProgressDialog.setTitle("Looking For Animals Now!");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.setCancelable(false);
-            if(mSwipeRefreshLayout == null) {
+            if(mSwipeRefreshLayout == null || !mURLAddress.equalsIgnoreCase("http://wataugahumane.org/animals")) {
                 mProgressDialog.show();
             }
         }
