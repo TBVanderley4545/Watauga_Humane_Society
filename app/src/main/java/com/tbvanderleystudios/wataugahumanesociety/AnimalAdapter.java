@@ -118,10 +118,10 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         }
     }
 
-    public Animal removeItem(int position) {
-        final Animal animal = mAnimals.remove(position);
+    public void removeItem(int position) {
+        mAnimals.remove(position);
         notifyItemRemoved(position);
-        return animal;
+        notifyDataSetChanged();
     }
 
     public void addItem(int position, Animal animal) {

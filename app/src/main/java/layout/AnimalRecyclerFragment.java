@@ -5,6 +5,8 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.tbvanderleystudios.wataugahumanesociety.Animal;
 import com.tbvanderleystudios.wataugahumanesociety.AnimalAdapter;
@@ -92,8 +95,8 @@ public class AnimalRecyclerFragment extends Fragment {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextChange(String newText) {
-                final List<Animal> filteredAnimalList = filter(mAnimalList, newText);
+            public boolean onQueryTextChange(String query) {
+                final List<Animal> filteredAnimalList = filter(mAnimalList, query);
                 mAnimalAdapter.animateTo(filteredAnimalList);
                 mAnimalRecycler.scrollToPosition(0);
                 return true;
