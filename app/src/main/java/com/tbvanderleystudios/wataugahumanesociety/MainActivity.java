@@ -36,6 +36,8 @@ public class MainActivity extends Activity {
     private ListView mNavigationDrawer;
     private ArrayAdapter<String> mNavDrawerAdapter;
     private String[] mDrawerItems;
+    private GetAnimalsTask mTask;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,8 @@ public class MainActivity extends Activity {
         if(vCheck.isNetworkAvailable()) {
 
             if (getFragmentManager().findFragmentById(R.id.content_frame) == null) {
-                new GetAnimalsTask("all animals", 1).execute();
+                mTask = new GetAnimalsTask("all animals", 1);
+                mTask.execute();
             }
 
         } else {
@@ -63,7 +66,8 @@ public class MainActivity extends Activity {
             @Override
             public void onRefresh() {
                 if (vCheck.isNetworkAvailable()) {
-                    new GetAnimalsTask("all animals", 0).execute();
+                    mTask = new GetAnimalsTask("all animals", 0);
+                    mTask.execute();
                 } else {
                     Toast.makeText(MainActivity.this, R.string.network_unavailable, Toast.LENGTH_LONG).show();
                     if(mSwipeRefreshLayout.isRefreshing()) {
@@ -74,6 +78,15 @@ public class MainActivity extends Activity {
         });
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if(mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED) {
+            mTask.cancel(true);
+        }
+    }
+
     private void createNavigationDrawer() {
         mNavigationDrawer = (ListView) findViewById(R.id.navigationDrawer);
         addDrawerItems();
@@ -81,7 +94,8 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = mDrawerItems[position];
-                new GetAnimalsTask(selectedItem, 1).execute();
+                mTask = new GetAnimalsTask(selectedItem, 1);
+                mTask.execute();
 
                 // Create a reference to the DrawerLayout and then close the drawer.
                 DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -153,7 +167,7 @@ public class MainActivity extends Activity {
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
 
-            // Prevent cancelling the AsyncTask.
+            // Prevent cancelling the AsyncTask with the back key.
             mProgressDialog.setCancelable(false);
 
             // Don't show ProgressDialog when refreshing as indicated by the flag.
@@ -216,6 +230,18 @@ public class MainActivity extends Activity {
         }
 
 
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+
+            if(mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            mProgressDialog.dismiss();
+
+            unlockScreenOrientation();
+        }
 
         @Override
         protected void onPostExecute(Void aVoid) {
