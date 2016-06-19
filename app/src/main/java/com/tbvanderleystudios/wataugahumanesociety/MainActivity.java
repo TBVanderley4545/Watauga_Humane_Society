@@ -18,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -268,8 +270,9 @@ public class MainActivity extends Activity {
             int iterator = 0;
             for(Element element : bitmapImageSelector) {
                 String imgSrc = element.attr("src");
-                InputStream input = new java.net.URL(imgSrc).openStream();
-                bitmap = BitmapFactory.decodeStream(input);
+                // Use Picasso to pull the bitmap images.
+                bitmap = Picasso.with(MainActivity.this).load(imgSrc).get();
+                // Add the new bitmap image to the array
                 mBitmapImageArray[iterator] = bitmap;
                 iterator++;
             }
