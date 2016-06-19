@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -146,8 +148,7 @@ public class AnimalDetailActivity extends Activity {
                 mDescription = descriptionSelector.text();
 
                 String imgSrc = bitmapImageSelector.attr("src");
-                InputStream input = new java.net.URL(imgSrc).openStream();
-                mBitmapImage = BitmapFactory.decodeStream(input);
+                mBitmapImage = Picasso.with(AnimalDetailActivity.this).load(imgSrc).get();
 
 
             } catch (IOException e) {

@@ -267,30 +267,24 @@ public class MainActivity extends Activity {
         }
 
         private void ParseBitmapImages(Elements bitmapImageSelector) throws IOException {
-            int iterator = 0;
-            for(Element element : bitmapImageSelector) {
-                String imgSrc = element.attr("src");
+                for(int i = 0; i < bitmapImageSelector.size(); i++) {
+                String imgSrc = bitmapImageSelector.get(i).attr("src");
                 // Use Picasso to pull the bitmap images.
                 bitmap = Picasso.with(MainActivity.this).load(imgSrc).get();
                 // Add the new bitmap image to the array
-                mBitmapImageArray[iterator] = bitmap;
-                iterator++;
+                mBitmapImageArray[i] = bitmap;
             }
         }
 
         private void ParseData(Elements selector, String[] array) {
-            int iterator = 0;
-            for(Element element : selector) {
-                array[iterator] = element.text();
-                iterator++;
+            for (int i = 0; i < selector.size(); i++) {
+                array[i] = selector.get(i).text();
             }
         }
 
         private void ParseURLAddress(Elements nameSelector) {
-            int iterator = 0;
-            for (Element link : nameSelector) {
-                mScrapedAddressArray[iterator] = link.absUrl("href");
-                iterator++;
+            for(int i = 0; i < nameSelector.size(); i++) {
+                mScrapedAddressArray[i] = nameSelector.get(i).absUrl("href");
             }
         }
 
