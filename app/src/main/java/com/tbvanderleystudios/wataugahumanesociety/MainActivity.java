@@ -304,7 +304,7 @@ public class MainActivity extends Activity {
         }
 
         private void ParseBitmapImages(Elements bitmapImageSelector) throws IOException {
-                for(int i = 0; i < bitmapImageSelector.size(); i++) {
+            for(int i = 0; i < bitmapImageSelector.size(); i++) {
                 String imgSrc = bitmapImageSelector.get(i).attr("src");
                 // Use Picasso to pull the bitmap images.
                 bitmap = Picasso.with(MainActivity.this).load(imgSrc).get();
