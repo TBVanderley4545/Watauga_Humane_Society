@@ -4,7 +4,9 @@
     <string name="whs_name_text_view">WATAUGA HUMANE SOCIETY</string>
     <string name="network_unavailable">Network Unavailable</string>
     <string name="search_title">Search</string>
-    <string name="search_hint">Enter a name...</string>
+    <string name="search_hint">Enter a name…</string>
+    <string name="drawer_open">Open Navigation</string>
+    <string name="drawer_close">Close Navigation</string>
     <string-array name="drawer_items">
         <item>All Animals</item>
         <item>Dogs</item>

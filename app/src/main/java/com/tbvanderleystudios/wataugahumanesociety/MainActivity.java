@@ -12,6 +12,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,6 +40,8 @@ public class MainActivity extends Activity {
     private ListView mNavigationDrawer;
     private ArrayAdapter<String> mNavDrawerAdapter;
     private String[] mDrawerItems;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
     private GetAnimalsTask mTask;
 
 
@@ -89,9 +93,34 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
     private void createNavigationDrawer() {
         mNavigationDrawer = (ListView) findViewById(R.id.navigationDrawer);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+
         addDrawerItems();
+
         mNavigationDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -99,11 +128,18 @@ public class MainActivity extends Activity {
                 mTask = new GetAnimalsTask(selectedItem, 1);
                 mTask.execute();
 
-                // Create a reference to the DrawerLayout and then close the drawer.
-                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawerLayout.closeDrawer(mNavigationDrawer);
+                mDrawerLayout.closeDrawer(mNavigationDrawer);
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void addDrawerItems() {
@@ -111,6 +147,7 @@ public class MainActivity extends Activity {
         mNavDrawerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mDrawerItems);
         mNavigationDrawer.setAdapter(mNavDrawerAdapter);
     }
+
 
 
     private class GetAnimalsTask extends AsyncTask<Void, Void, Void> {
