@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
     private List<Animal> mAnimals;
     private Listener mListener;
     private final LayoutInflater mInflater;
+    private Context mContext;
 
     public interface Listener {
         void onClick(int position);
@@ -31,7 +34,8 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
     }
 
     public AnimalAdapter(Context context, List<Animal> animals) {
-        mInflater = LayoutInflater.from(context);
+        mContext = context;
+        mInflater = LayoutInflater.from(mContext);
         mAnimals = new ArrayList<>(animals);
     }
 
@@ -51,7 +55,8 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         CardView cardView = holder.cardView;
 
         ImageView animalImageView = (ImageView) cardView.findViewById(R.id.animalImageView);
-        animalImageView.setImageBitmap(mAnimals.get(position).getBitmapImage());
+        Picasso.with(mContext).load(mAnimals.get(position).getBitmapImageUrl())
+                .placeholder(R.drawable.placeholder).into(animalImageView);
         animalImageView.setContentDescription(mAnimals.get(position).getName());
 
         TextView animalNameTextView = (TextView) cardView.findViewById(R.id.animalNameTextView);

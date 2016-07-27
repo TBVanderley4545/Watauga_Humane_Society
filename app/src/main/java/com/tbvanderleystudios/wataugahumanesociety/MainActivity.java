@@ -6,8 +6,6 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -24,11 +22,9 @@ import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import layout.AnimalRecyclerFragment;
 
@@ -156,10 +152,10 @@ public class MainActivity extends Activity {
         private String mSelectedItem;
         private int mShowDialogFlag;
         private int mAnimalCount;
-        private Bitmap bitmap;
+        private String mBitmapImageUrl;
         private ProgressDialog mProgressDialog = new ProgressDialog(MainActivity.this);
         private String[] mNamesArray;
-        private Bitmap[] mBitmapImageArray;
+        private String[] mBitmapImageUrlArrray;
         private String[] mStatusArray;
         private String[] mGenderArray;
         private String[] mAgeArray;
@@ -233,7 +229,7 @@ public class MainActivity extends Activity {
                 // This is done to get the number of animals so that arrays can be sized properly
                 mAnimalCount = nameSelector.size();
                 mNamesArray = new String[mAnimalCount];
-                mBitmapImageArray = new Bitmap[mAnimalCount];
+                mBitmapImageUrlArrray = new String[mAnimalCount];
                 mStatusArray = new String[mAnimalCount];
                 mGenderArray = new String[mAnimalCount];
                 mAgeArray = new String[mAnimalCount];
@@ -253,7 +249,7 @@ public class MainActivity extends Activity {
                 // Pass all elements into the Animal[] called mAnimals.
                 for (int i = 0; i < mAnimalCount; i++) {
                     mAnimals[i] = new Animal(mNamesArray[i],
-                            mBitmapImageArray[i],
+                            mBitmapImageUrlArrray[i],
                             mStatusArray[i],
                             mGenderArray[i],
                             mAgeArray[i],
@@ -305,11 +301,9 @@ public class MainActivity extends Activity {
 
         private void ParseBitmapImages(Elements bitmapImageSelector) throws IOException {
             for(int i = 0; i < bitmapImageSelector.size(); i++) {
-                String imgSrc = bitmapImageSelector.get(i).attr("src");
-                // Use Picasso to pull the bitmap images.
-                bitmap = Picasso.with(MainActivity.this).load(imgSrc).get();
-                // Add the new bitmap image to the array
-                mBitmapImageArray[i] = bitmap;
+                mBitmapImageUrl = bitmapImageSelector.get(i).attr("src");
+                // Add the new mBitmapImageUrl image to the array
+                mBitmapImageUrlArrray[i] = mBitmapImageUrl;
             }
         }
 

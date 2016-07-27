@@ -73,11 +73,12 @@ public class AnimalDetailActivity extends Activity {
     }
 
     private void updateUI() {
-        mAnimalDetailPic.setImageBitmap(mAnimal.getBitmapImage());
+        Picasso.with(this).load(mAnimal.getBitmapImageUrl()).placeholder(R.drawable.placeholder)
+                .into(mAnimalDetailPic);
         if(mAnimal.getName() != null) {
             mAnimalDetailName.setText(mAnimal.getName().toUpperCase());
         } else {
-            mAnimalDetailName.setText("Oops, an error occurred.");
+            mAnimalDetailName.setText(R.string.error_message);
         }
         mAnimalDetailStatus.setText(mAnimal.getStatus());
         mAnimalDetailGender.setText(mAnimal.getGender());
@@ -98,7 +99,7 @@ public class AnimalDetailActivity extends Activity {
 
         private ProgressDialog mProgressDialog = new ProgressDialog(AnimalDetailActivity.this);
         private String mName;
-        private Bitmap mBitmapImage;
+        private String mBitmapImageUrl;
         private String mStatus;
         private String mGender;
         private String mHouseTrained;
@@ -146,10 +147,7 @@ public class AnimalDetailActivity extends Activity {
                 mAge = ageSelector.text();
                 mBreed = breedSelector.text();
                 mDescription = descriptionSelector.text();
-
-                String imgSrc = bitmapImageSelector.attr("src");
-                mBitmapImage = Picasso.with(AnimalDetailActivity.this).load(imgSrc).get();
-
+                mBitmapImageUrl = bitmapImageSelector.attr("src");
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -162,7 +160,7 @@ public class AnimalDetailActivity extends Activity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            mAnimal = new Animal(mName, mBitmapImage, mStatus, mGender,
+            mAnimal = new Animal(mName, mBitmapImageUrl, mStatus, mGender,
                     mAge, mBreed, mHouseTrained, mDeclawed, mDescription);
 
             updateUI();

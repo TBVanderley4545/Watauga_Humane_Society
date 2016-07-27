@@ -7,6 +7,7 @@
     <string name="search_hint">Enter a name…</string>
     <string name="drawer_open">Open Navigation</string>
     <string name="drawer_close">Close Navigation</string>
+    <string name="error_message">Oops, an error occurred.</string>
     <string-array name="drawer_items">
         <item>All Animals</item>
         <item>Dogs</item>

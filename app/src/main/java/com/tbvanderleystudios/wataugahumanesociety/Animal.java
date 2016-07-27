@@ -6,7 +6,7 @@ import android.os.Parcelable;
 
 public class Animal implements Parcelable {
     private String mName;
-    private Bitmap mBitmapImage;
+    private String mBitmapImageUrl;
     private String mStatus;
     private String mGender;
     private String mAge;
@@ -17,10 +17,10 @@ public class Animal implements Parcelable {
     private String mDeclawed;
     private String mDescription;
 
-    public Animal(String name, Bitmap bitmapImage, String status,
+    public Animal(String name, String bitmapImageUrl, String status,
                   String gender, String age, String breed, String scrapedURLAddress) {
         mName = name;
-        mBitmapImage = bitmapImage;
+        mBitmapImageUrl = bitmapImageUrl;
         mStatus = status;
         mGender = gender;
         mAge = age;
@@ -31,11 +31,11 @@ public class Animal implements Parcelable {
         mDescription = "";
     }
 
-    public Animal(String name, Bitmap bitmapImage, String status,
+    public Animal(String name, String bitmapImageUrl, String status,
                   String gender, String age, String breed, String housetrained,
                   String declawed, String description) {
         mName = name;
-        mBitmapImage = bitmapImage;
+        mBitmapImageUrl = bitmapImageUrl;
         mStatus = status;
         mGender = gender;
         mAge = age;
@@ -50,8 +50,8 @@ public class Animal implements Parcelable {
         return mName;
     }
 
-    public Bitmap getBitmapImage() {
-        return mBitmapImage;
+    public String getBitmapImageUrl() {
+        return mBitmapImageUrl;
     }
 
     public String getStatus() {
@@ -88,7 +88,7 @@ public class Animal implements Parcelable {
 
     public Animal(Parcel in) {
         mName = in.readString();
-        mBitmapImage = (Bitmap) in.readValue(Bitmap.class.getClassLoader());
+        mBitmapImageUrl = in.readString();
         mStatus = in.readString();
         mGender = in.readString();
         mAge = in.readString();
@@ -107,7 +107,7 @@ public class Animal implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mName);
-        dest.writeValue(mBitmapImage);
+        dest.writeString(mBitmapImageUrl);
         dest.writeString(mStatus);
         dest.writeString(mGender);
         dest.writeString(mAge);
